@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Dashboard</title>
+</head>
+<body>
+
+    <h2>User Login</h2>
+
+    <input type="text" id="name" placeholder="Enter Username">
+    <input type="password" id="pass" placeholder="Enter Password">
+
+    <button onclick="login()">Login</button>
+
+    <h2 id="dashboard"></h2>
+    <button id="logout" onclick="logout()" style="display:none">
+        Logout
+    </button>
+
+    <script>
+        function login() {
+            let name = document.getElementById("name").value;
+            let pass = document.getElementById("pass").value;
+
+            if (name == "" || pass == "") {
+                alert("Enter username and password");
+                return;
+            }
+
+            localStorage.setItem("username", name);
+            sessionStorage.setItem("login", "true");
+
+            showDashboard();
+        }
+
+        function showDashboard() {
+            if (sessionStorage.getItem("login") == "true") {
+                document.getElementById("dashboard").innerHTML =
+                    "Welcome " + localStorage.getItem("username");
+
+                document.getElementById("logout").style.display = "block";
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("username");
+            sessionStorage.removeItem("login");
+
+            document.getElementById("dashboard").innerHTML = "";
+            document.getElementById("logout").style.display = "none";
+
+            alert("Logged out successfully");
+        }
+
+        showDashboard();
+    </script>
+
+</body>
+</html>
